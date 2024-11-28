@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <h1>Авторизация</h1>
+    <div>
+        <form name="f" th:action="@{/perform-login}" method="post">
+
+            <div th:if="${param.error}" class="alert alert-error">
+                Неправильные имя и пароль.
+            </div>
+
+            <fieldset>
+                <legend>Вход</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td> <label for="username">Имя</label> </td>
+                            <td> <input type="text" id="username" name="username"/> </td>
+                        </tr>
+                        <tr>
+                            <td> <label for="password">Пароль</label> </td>
+                            <td> <input type="password" id="password" name="password"/> </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> <button type="submit" class="btn">Войти</button> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <fieldset>
+            <a th:href="@{hello}">Ко входу</a> <br>
+        </fieldset>
+    </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        Расскажите что-то интересное? :) <br>
+    </div>
+
+    <fieldset>
+        <a th:href="@{hello}">К приветствию</a> <br>
+    </fieldset>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <fieldset>
+            <a th:href="@{admin}" > Администраторская </a> <br>
+        </fieldset>
+    </div>
+
+    <fieldset>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" value="Logout"> Выйти</button>
+        </form>
+    </fieldset>
+
+</body>
+</html>
+
+

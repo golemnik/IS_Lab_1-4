@@ -1,4 +1,4 @@
-package com.golem.lab.classes;
+package com.golem.lab.coordinatesDao;
 
 import jakarta.persistence.*;
 
