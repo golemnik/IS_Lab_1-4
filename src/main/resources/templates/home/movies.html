@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies list</title>
+</head>
+<body>
+    <h1>Movies list</h1>
+
+
+    <fieldset>
+        <table>
+            <thead>
+            <tr>
+                <th scope="row"></th>
+                <th scope="row"></th>
+                <th scope="row">Id</th>
+                <th scope="row">Name</th>
+                <th scope="row">creationDate</th>
+                <th scope="row">oscarsCount</th>
+                <th scope="row">budget</th>
+                <th scope="row">totalBoxOffice</th>
+                <th scope="row">mpaaRating</th>
+                <th scope="row">director</th>
+                <th scope="row">screenwriter</th>
+                <th scope="row">operator</th>
+                <th scope="row">length</th>
+                <th scope="row">goldenPalmCount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="movie: ${movies}">
+                <td>
+                    <form th:action="@{deleteMovie}" method="post">
+                        <input type="hidden" th:value="${movie.id}" name="movieId"/>
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{updateMovie}" th:object="${updateMovie}" method="post">
+                        <input type="hidden" th:value="${movie.id}" name="movieId"/>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+                <td th:text="${movie.id}"></td>
+                <td th:text="${movie.name}"></td>
+                <td th:text="${movie.creationDate}"></td>
+                <td th:text="${movie.oscarsCount}"></td>
+                <td th:text="${movie.budget}"></td>
+                <td th:text="${movie.totalBoxOffice}"></td>
+                <td th:text="${movie.mpaaRating}"></td>
+                <td th:text="${movie.director.name}"></td>
+                <td th:text="${movie.screenwriter.name}"></td>
+                <td th:text="${movie.operator.name}"></td>
+                <td th:text="${movie.length}"></td>
+                <td th:text="${movie.goldenPalmCount}"></td>
+                <!--                <td th:text="${movie.client}"></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+
+    <fieldset>
+        <a th:href="@{/home}">В главное меню</a> <br>
+    </fieldset>
+
+</body>
+</html>

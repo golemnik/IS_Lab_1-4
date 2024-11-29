@@ -4,30 +4,35 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
 </head>
 <body>
     <div>
-        Расскажите что-то интересное? :) <br>
+        Let's talk a little? :) <br>
     </div>
 
     <fieldset>
-        <a th:href="@{hello}">Ко входу</a> <br>
+        <a th:href="@{hello}">To enter page</a> <br>
     </fieldset>
 
     <fieldset>
-        <a th:href="@{home/newMovie}">Новый фильм</a> <br>
+        <a th:href="@{home/newMovie}">New film</a> <br>
+    </fieldset>
+
+
+    <fieldset>
+        <a th:href="@{home/movies}">All films</a> <br>
     </fieldset>
 
     <div sec:authorize="hasAuthority('ADMIN')">
         <fieldset>
-            <a th:href="@{admin}" > Администраторская </a> <br>
+            <a th:href="@{admin}" > Administration </a> <br>
         </fieldset>
     </div>
 
     <fieldset>
         <form th:action="@{/logout}" method="post" style="display:inline">
-            <button type="submit" value="Logout"> Выйти</button>
+            <button type="submit" value="Logout"> Exit</button>
         </form>
     </fieldset>
 

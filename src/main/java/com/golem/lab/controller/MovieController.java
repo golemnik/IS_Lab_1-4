@@ -1,20 +1,40 @@
 package com.golem.lab.controller;
 
 import com.golem.lab.classes.*;
+import com.golem.lab.coordinatesDao.CoordinatesService;
+import com.golem.lab.model.Client;
 import com.golem.lab.repository.MovieRepo;
+import com.golem.lab.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class MovieController {
 
     @Autowired
     private MovieRepo movieRepo;
+
+    @Autowired
+    private MovieService movieService;
+
+    @RequestMapping("/home/deleteMovie")
+    public String process(Model model, @RequestParam int movieId) {
+        movieService.deleteMovieById(movieId);
+        return "redirect:/home/movies";
+    }
+
+    @GetMapping("/home/movies")
+    public String getMovies(Model model) {
+        List<Movie> movies = movieService.findAllMovies();
+        model.addAttribute("movies", movies);
+
+        return "/home/movies";
+    }
 
     @GetMapping(value = "/home/newMovie")
     public String addMovie(Model model) {
