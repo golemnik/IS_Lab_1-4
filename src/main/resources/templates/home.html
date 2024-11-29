@@ -12,7 +12,11 @@
     </div>
 
     <fieldset>
-        <a th:href="@{hello}">К приветствию</a> <br>
+        <a th:href="@{hello}">Ко входу</a> <br>
+    </fieldset>
+
+    <fieldset>
+        <a th:href="@{home/newMovie}">Новый фильм</a> <br>
     </fieldset>
 
     <div sec:authorize="hasAuthority('ADMIN')">

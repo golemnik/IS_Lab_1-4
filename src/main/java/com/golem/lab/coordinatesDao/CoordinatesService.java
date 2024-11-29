@@ -1,5 +1,7 @@
 package com.golem.lab.coordinatesDao;
 
+import com.golem.lab.classes.Coordinates;
+
 import java.util.List;
 
 public interface CoordinatesService {

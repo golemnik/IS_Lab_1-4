@@ -1,4 +1,4 @@
-package com.golem.lab.coordinatesDao;
+package com.golem.lab.classes;
 
 import jakarta.persistence.*;
 
@@ -9,10 +9,10 @@ public class Coordinates {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Coordinates_seq")
     @SequenceGenerator(name = "Coordinates_seq", sequenceName = "Coordinates_seq")
-    private Long id;
-    @Column(name = "x")
+    private long id;
+    @Column(nullable = false)
     private Integer x; //Поле не может быть null
-    @Column(name = "Y")
+    @Column(nullable = false)
     private Integer y; //Поле не может быть null
 
     public Integer getX() {
@@ -29,10 +29,10 @@ public class Coordinates {
         this.y = y;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
-    public Long getId() {
+    public long getId() {
         return id;
     }
 }

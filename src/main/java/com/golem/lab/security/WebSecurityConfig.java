@@ -32,7 +32,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/registration", "/hello", "/").permitAll()
-                        .requestMatchers("/home").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/home", "/home/**").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/admin").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )

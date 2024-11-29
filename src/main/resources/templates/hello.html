@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
+
+    <fieldset sec:authorize="isAuthenticated()">
+        <a th:href="@{home}">В главное меню</a>
+    </fieldset>
+
     <fieldset>
         <a th:href="@{login}">Войти</a>
     </fieldset>
     <fieldset>
         <a th:href="@{registration}">Зарегистрироваться</a>
     </fieldset>
+
 </body>
 </html>

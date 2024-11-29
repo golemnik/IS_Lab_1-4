@@ -2,7 +2,6 @@
 package com.golem.lab.service;
 
 
-import com.golem.lab.coordinatesDao.Coordinates;
 import com.golem.lab.model.Client;
 
 import java.util.List;

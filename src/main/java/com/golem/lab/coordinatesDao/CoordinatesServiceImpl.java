@@ -1,5 +1,6 @@
 package com.golem.lab.coordinatesDao;
 
+import com.golem.lab.classes.Coordinates;
 import com.golem.lab.repository.CoordinatesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
