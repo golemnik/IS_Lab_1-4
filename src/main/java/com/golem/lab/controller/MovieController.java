@@ -22,6 +22,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+
     @RequestMapping("/home/deleteMovie")
     public String process(Model model, @RequestParam int movieId) {
         movieService.deleteMovieById(movieId);
@@ -38,39 +39,25 @@ public class MovieController {
 
     @GetMapping(value = "/home/newMovie")
     public String addMovie(Model model) {
-
         Movie newMovie = new Movie();
-        Coordinates test_coord = new Coordinates();
-        test_coord.setX(1);
-        test_coord.setY(1);
-
-        newMovie.setBudget(999f);
-        newMovie.setDirector(getPerson());
-        newMovie.setScreenwriter(getPerson());
-        newMovie.setOperator(getPerson());
-        newMovie.setGenre(MovieGenre.ACTION);
-        newMovie.setMpaaRating(MpaaRating.NC_17);
-        newMovie.setCoordinates(test_coord);
-
         model.addAttribute("newMovie", newMovie);
+
         return "/home/newMovie";
     }
-
-
 
     @PostMapping(value = "/home/newMovie")
     public String addMovie(@ModelAttribute("newMovie") Movie newMovie, BindingResult bindingResult, Model model) {
 
-        Coordinates test_coord = new Coordinates();
-        test_coord.setX(1);
-        test_coord.setY(1);
+//        Coordinates test_coord = new Coordinates();
+//        test_coord.setX(1);
+//        test_coord.setY(1);
 
-        newMovie.setDirector(getPerson());
-        newMovie.setScreenwriter(getPerson());
-        newMovie.setOperator(getPerson());
-        newMovie.setGenre(MovieGenre.ACTION);
-        newMovie.setMpaaRating(MpaaRating.NC_17);
-        newMovie.setCoordinates(test_coord);
+//        newMovie.setDirector(getPerson());
+//        newMovie.setScreenwriter(getPerson());
+//        newMovie.setOperator(getPerson());
+//        newMovie.setGenre(MovieGenre.ACTION);
+//        newMovie.setMpaaRating(MpaaRating.NC_17);
+//        newMovie.setCoordinates(test_coord);
         movieRepo.save(newMovie);
 
         return "redirect:/home";

@@ -1,0 +1,80 @@
+<div th:fragment="person_form(person)">
+    <fieldset>
+        <legend> <span th:text="${person}"> </span> </legend>
+        <table>
+            <tbody>
+            <tr>
+                <td> <label> Name </label> </td>
+                <td> <input type="text" th:id ="${person} + '.name'" th:name="${person} + '.name'" th:value="Unknown"/> </td>
+            </tr>
+            <tr>
+                <td> <label> Height </label> </td>
+                <td> <input type="text" th:id="${person} + '.height'" th:name="${person} + '.height'" th:value="170"/> </td>
+            </tr>
+            <tr>
+                <td> <label>Eye color</label> </td>
+                <td>
+                    <select th:id="${person} + '.eyeColor'" th:name="${person} + '.eyeColor'">
+                        <option th:value="BLACK">Black</option>
+                        <option th:value="BLUE">BLue</option>
+                        <option th:value="YELLOW">Yellow</option>
+                        <option th:value="WHITE">White</option>
+                        <option th:value="BROWN">Brown</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td> <label>Hair Color</label> </td>
+                <td>
+                    <select th:id="${person} + '.hairColor'" th:name="${person} + '.hairColor'">
+                        <option th:value="BLACK">Black</option>
+                        <option th:value="BLUE">BLue</option>
+                        <option th:value="YELLOW">Yellow</option>
+                        <option th:value="WHITE">White</option>
+                        <option th:value="BROWN">Brown</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td> <label>Nationality</label> </td>
+                <td>
+                    <select th:id="${person} + '.nationality'" th:name="${person} + '.nationality'">
+                        <option th:value="RUSSIA">Russia</option>
+                        <option th:value="USA">USA</option>
+                        <option th:value="GERMANY">Germany</option>
+                        <option th:value="THAILAND">Thailand</option>
+                        <option th:value="NORTH_KOREA">North Korea</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <fieldset>
+            <legend>Location</legend>
+            <table>
+                <tbody>
+                <tr>
+                    <td> <label> Place name </label> </td>
+                    <td> <input type="text" th:id="${person} + '.location.name'" th:name="${person} + '.location.name'"
+                                th:value="Unknown"/> </td>
+                </tr>
+                <tr>
+                    <td> <label> X </label> </td>
+                    <td> <input type="text" th:id="${person} + '.location.x'" th:name="${person}+'.location.x'"
+                                th:value="1"/> </td>
+                </tr>
+                <tr>
+                    <td> <label> Y </label> </td>
+                    <td> <input type="text" th:id="${person}+'.location.y'" th:name="${person}+'.location.y'"
+                                th:value="1"/> </td>
+                </tr>
+                <tr>
+                    <td> <label> Z </label> </td>
+                    <td> <input type="text" th:id="${person}+'.location.z'" th:name="${person}+'.location.z'"
+                                th:value="1"/> </td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </fieldset>
+</div>

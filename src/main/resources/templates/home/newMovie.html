@@ -6,43 +6,295 @@
 </head>
 <body>
 
-    <h1>Добавить новый фильм</h1>
+    <h1>Add new film</h1>
 
     <form name="f" th:action="@{newMovie}" th:object="${newMovie}" method="post">
-        <fieldset>
-            <legend>Создать</legend>
 
+        <fieldset>
+            <legend>Coordinates</legend>
+            <table>
+                <tbody>
+                    <tr>
+                        <td> <label for="coordinates.x">Coordinate x</label> </td>
+                        <td> <input type="text" id="coordinates.x" name="coordinates.x" th:value="333"/> </td>
+                    </tr>
+                    <tr>
+                        <td> <label for="coordinates.y">Coordinate y</label> </td>
+                        <td> <input type="text" id="coordinates.y" name="coordinates.y" th:value="333"/> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <table>
+            <tr>
+                <td th:insert="~{home/formFragment::person_form(person='director')}"></td>
+                <td th:insert="~{home/formFragment::person_form(person='screenwriter')}"></td>
+                <td th:insert="~{home/formFragment::person_form(person='operator')}"></td>
+            </tr>
+<!--            <td>-->
+<!--        <fieldset>-->
+<!--            <legend>Director</legend>-->
+<!--            <table>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <td> <label> Name </label> </td>-->
+<!--                    <td> <input type="text" id="director.name" name="director.name" th:value="Unknown"/> </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label> Height </label> </td>-->
+<!--                    <td> <input type="text" id="director.height" name="director.height" th:value="170"/> </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Eye color</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.eyeColor}">-->
+<!--                            <option value="BLACK">Black</option>-->
+<!--                            <option value="BLUE">BLue</option>-->
+<!--                            <option value="YELLOW">Yellow</option>-->
+<!--                            <option value="WHITE">White</option>-->
+<!--                            <option value="BROWN">Brown</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Hair Color</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.hairColor}">-->
+<!--                            <option value="BLACK">Black</option>-->
+<!--                            <option value="BLUE">BLue</option>-->
+<!--                            <option value="YELLOW">Yellow</option>-->
+<!--                            <option value="WHITE">White</option>-->
+<!--                            <option value="BROWN">Brown</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Nationality</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.nationality}">-->
+<!--                            <option value="RUSSIA">Russia</option>-->
+<!--                            <option value="USA">USA</option>-->
+<!--                            <option value="GERMANY">Germany</option>-->
+<!--                            <option value="THAILAND">Thailand</option>-->
+<!--                            <option value="NORTH_KOREA">North Korea</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <fieldset>-->
+<!--                <legend>Location</legend>-->
+<!--                <table>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Place name </label> </td>-->
+<!--                        <td> <input type="text" id="director.location.name" name="director.location.name"-->
+<!--                                    th:value="Unknown"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> X </label> </td>-->
+<!--                        <td> <input type="text" id="director.location.x" name="director.location.x"-->
+<!--                                    th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Y </label> </td>-->
+<!--                        <td> <input type="text" id="director.location.y" name="director.location.y"-->
+<!--                                    th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Z </label> </td>-->
+<!--                        <td> <input type="text" id="director.location.z" name="director.location.z"-->
+<!--                                    th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </fieldset>-->
+<!--        </fieldset>-->
+<!--                </td>-->
+
+<!--        <fieldset>-->
+<!--            <legend>Screenwriter</legend>-->
+<!--            <table>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <td> <label> Name </label> </td>-->
+<!--                    <td> <input type="text" th:field="*{director.name}" th:value="Unknown"/> </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label> Height </label> </td>-->
+<!--                    <td> <input type="text" th:field="*{director.height}" th:value="170"/> </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Eye color</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.eyeColor}">-->
+<!--                            <option value="BLACK">Black</option>-->
+<!--                            <option value="BLUE">BLue</option>-->
+<!--                            <option value="YELLOW">Yellow</option>-->
+<!--                            <option value="WHITE">White</option>-->
+<!--                            <option value="BROWN">Brown</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Hair Color</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.hairColor}">-->
+<!--                            <option value="BLACK">Black</option>-->
+<!--                            <option value="BLUE">BLue</option>-->
+<!--                            <option value="YELLOW">Yellow</option>-->
+<!--                            <option value="WHITE">White</option>-->
+<!--                            <option value="BROWN">Brown</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Nationality</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.nationality}">-->
+<!--                            <option value="RUSSIA">Russia</option>-->
+<!--                            <option value="USA">USA</option>-->
+<!--                            <option value="GERMANY">Germany</option>-->
+<!--                            <option value="THAILAND">Thailand</option>-->
+<!--                            <option value="NORTH_KOREA">North Korea</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <fieldset>-->
+<!--                <legend>Location</legend>-->
+<!--                <table>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Place name </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.name}" th:value="Unknown"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> X </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.x}" th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Y </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.y}" th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Z </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.z}" th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </fieldset>-->
+<!--        </fieldset>-->
+<!--                </td>-->
+<!--                <td>-->
+
+<!--        <fieldset>-->
+<!--            <legend>Operator</legend>-->
+<!--            <table>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <td> <label> Name </label> </td>-->
+<!--                    <td> <input type="text" th:field="*{director.name}" th:value="Unknown"/> </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label> Height </label> </td>-->
+<!--                    <td> <input type="text" th:field="*{director.height}" th:value="170"/> </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Eye color</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.eyeColor}">-->
+<!--                            <option value="BLACK">Black</option>-->
+<!--                            <option value="BLUE">BLue</option>-->
+<!--                            <option value="YELLOW">Yellow</option>-->
+<!--                            <option value="WHITE">White</option>-->
+<!--                            <option value="BROWN">Brown</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Hair Color</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.hairColor}">-->
+<!--                            <option value="BLACK">Black</option>-->
+<!--                            <option value="BLUE">BLue</option>-->
+<!--                            <option value="YELLOW">Yellow</option>-->
+<!--                            <option value="WHITE">White</option>-->
+<!--                            <option value="BROWN">Brown</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td> <label>Nationality</label> </td>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{director.nationality}">-->
+<!--                            <option value="RUSSIA">Russia</option>-->
+<!--                            <option value="USA">USA</option>-->
+<!--                            <option value="GERMANY">Germany</option>-->
+<!--                            <option value="THAILAND">Thailand</option>-->
+<!--                            <option value="NORTH_KOREA">North Korea</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <fieldset>-->
+<!--                <legend>Location</legend>-->
+<!--                <table>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Place name </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.name}" th:value="Unknown"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> X </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.x}" th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Y </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.y}" th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> <label> Z </label> </td>-->
+<!--                        <td> <input type="text" th:field="*{director.location.z}" th:value="1"/> </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </fieldset>-->
+<!--        </fieldset>-->
+
+<!--                </td>-->
+<!--            </tr>-->
+        </table>
+
+
+        <fieldset>
+            <legend>Film</legend>
             <table>
                 <tbody>
                 <tr>
-                    <td> <label for="name">Имя</label> </td>
-                    <td> <input type="text" id="name" name="name" value="123"/> </td>
-                </tr>
-                <tr>
-                    <td> <label for="coordinates.x">Coordinate x</label> </td>
-                    <td> <input type="text" id="coordinates.x" name="coordinates.x" value="123"/> </td>
-                </tr>
-                <tr>
-                    <td> <label for="coordinates.y">Coordinate y</label> </td>
-                    <td> <input type="text" id="coordinates.y" name="coordinates.y" value="123"/> </td>
+                    <td> <label for="name"> Name </label> </td>
+                    <td> <input type="text" id="name" name="name" th:value="123"/> </td>
                 </tr>
 
                 <tr>
-                    <td> <label for="oscarsCount">количество оскаров</label> </td>
-                    <td> <input type="text" id="oscarsCount" name="oscarsCount" value="123"/> </td>
+                    <td> <label for="oscarsCount">Oscar amount</label> </td>
+                    <td> <input type="text" id="oscarsCount" name="oscarsCount" th:value="123"/> </td>
                 </tr>
                 <tr>
-                    <td> <label for="budget">бюджет</label> </td>
-                    <td> <input type="text" id="budget" name="budget" value="123"/> </td>
+                    <td> <label for="budget">Budget</label> </td>
+                    <td> <input type="text" id="budget" name="budget" th:value="123"/> </td>
                 </tr>
                 <tr>
-                    <td> <label for="totalBoxOffice">собранная касса</label> </td>
-                    <td> <input type="text" id="totalBoxOffice" name="totalBoxOffice" value="123"/> </td>
+                    <td> <label for="totalBoxOffice">Total box office</label> </td>
+                    <td> <input type="text" id="totalBoxOffice" name="totalBoxOffice" th:value="123"/> </td>
                 </tr>
                 <tr>
-                    <td> <label for="mpaaRating">рейтинг фильма</label> </td>
+                    <td> <label for="mpaaRating">MPAA Rating</label> </td>
                     <td>
-                        <select id="mpaaRating">
+                        <select id="mpaaRating" name="mpaaRating">
                             <option value="PG">PG</option>
                             <option value="R">R</option>
                             <option value="NC_17">NC 17</option>
@@ -52,29 +304,18 @@
 
 
                 <tr>
-                    <td> <label for="director">директор</label> </td>
-                    <td> <input type="text" id="director" name="director" value="123"/> </td>
+                    <td> <label for="goldenPalmCount">Golden Palm amount</label> </td>
+                    <td> <input type="text" id="goldenPalmCount" name="goldenPalmCount" th:value="1"/> </td>
                 </tr>
                 <tr>
-                    <td> <label for="screenwriter">сценарист</label> </td>
-                    <td> <input type="text" id="screenwriter" name="screenwriter" value="123"/> </td>
+                    <td> <label for="length">length</label> </td>
+                    <td> <input type="text" id="length" name="length" th:value="22"/> </td>
                 </tr>
-                <tr>
-                    <td> <label for="operator">оператор</label> </td>
-                    <td> <input type="text" id="operator" name="operator" value="123"/> </td>
-                </tr>
-                <tr>
-                    <td> <label for="length">длинна</label> </td>
-                    <td> <input type="text" id="length" name="length" value="123"/> </td>
-                </tr>
-                <tr>
-                    <td> <label for="goldenPalmCount">количество "золотых пальм"</label> </td>
-                    <td> <input type="text" id="goldenPalmCount" name="goldenPalmCount" value="123"/> </td>
-                </tr>
+
                 <tr>
                     <td> <label for="genre">Genre</label> </td>
                     <td>
-                        <select id="genre">
+                        <select id="genre" name="genre">
                             <option value="ACTION">Action</option>
                             <option value="MUSICAL">Musical</option>
                             <option value="ADVENTURE">Adventure</option>
@@ -94,7 +335,7 @@
     </form>
 
     <fieldset>
-        <a th:href="@{/home}">В главное меню</a> <br>
+        <a th:href="@{/home}">Back to home</a> <br>
     </fieldset>
 
 

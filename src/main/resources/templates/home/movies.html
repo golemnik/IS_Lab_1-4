@@ -8,8 +8,6 @@
 </head>
 <body>
     <h1>Movies list</h1>
-
-
     <fieldset>
         <table>
             <thead>
@@ -18,16 +16,18 @@
                 <th scope="row"></th>
                 <th scope="row">Id</th>
                 <th scope="row">Name</th>
-                <th scope="row">creationDate</th>
-                <th scope="row">oscarsCount</th>
-                <th scope="row">budget</th>
-                <th scope="row">totalBoxOffice</th>
-                <th scope="row">mpaaRating</th>
-                <th scope="row">director</th>
-                <th scope="row">screenwriter</th>
-                <th scope="row">operator</th>
-                <th scope="row">length</th>
-                <th scope="row">goldenPalmCount</th>
+                <th scope="row">Coordinate X</th>
+                <th scope="row">Coordinate Y</th>
+                <th scope="row">Creation Date</th>
+                <th scope="row">Oscar amount</th>
+                <th scope="row">Budget</th>
+                <th scope="row">Total boxing office</th>
+                <th scope="row">MPAA Rating</th>
+                <th scope="row">Director</th>
+                <th scope="row">Screenwriter</th>
+                <th scope="row">Operator</th>
+                <th scope="row">Length</th>
+                <th scope="row">Golden palm amount</th>
             </tr>
             </thead>
             <tbody>
@@ -46,6 +46,8 @@
                 </td>
                 <td th:text="${movie.id}"></td>
                 <td th:text="${movie.name}"></td>
+                <td th:text="${movie.coordinates.x}"></td>
+                <td th:text="${movie.coordinates.y}"></td>
                 <td th:text="${movie.creationDate}"></td>
                 <td th:text="${movie.oscarsCount}"></td>
                 <td th:text="${movie.budget}"></td>
