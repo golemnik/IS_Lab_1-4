@@ -1,8 +1,6 @@
 package com.golem.lab.controller;
 
 import com.golem.lab.classes.*;
-import com.golem.lab.coordinatesDao.CoordinatesService;
-import com.golem.lab.model.Client;
 import com.golem.lab.repository.MovieRepo;
 import com.golem.lab.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,16 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    @RequestMapping("/home/updateMovie")
+    public String updateMovie(Model model, @RequestParam int movieId) {
+        Movie newMovie = movieService.findMovieById(movieId);
+        model.addAttribute("newMovie", newMovie);
+
+        return "/home/newMovie";
+    }
 
     @RequestMapping("/home/deleteMovie")
-    public String process(Model model, @RequestParam int movieId) {
+    public String deleteMovie(Model model, @RequestParam int movieId) {
         movieService.deleteMovieById(movieId);
         return "redirect:/home/movies";
     }
@@ -40,6 +45,23 @@ public class MovieController {
     @GetMapping(value = "/home/newMovie")
     public String addMovie(Model model) {
         Movie newMovie = new Movie();
+        Coordinates test_coord = new Coordinates();
+        test_coord.setX(55);
+        test_coord.setY(55);
+
+        newMovie.setName("John");
+        newMovie.setOscarsCount(1);
+        newMovie.setBudget(250_000_000f);
+        newMovie.setTotalBoxOffice(1_000_000_000f);
+        newMovie.setGoldenPalmCount(2L);
+        newMovie.setLength(3);
+        newMovie.setDirector(getPerson());
+        newMovie.setScreenwriter(getPerson());
+        newMovie.setOperator(getPerson());
+        newMovie.setGenre(MovieGenre.HORROR);
+        newMovie.setMpaaRating(MpaaRating.R);
+        newMovie.setCoordinates(test_coord);
+
         model.addAttribute("newMovie", newMovie);
 
         return "/home/newMovie";
@@ -48,16 +70,11 @@ public class MovieController {
     @PostMapping(value = "/home/newMovie")
     public String addMovie(@ModelAttribute("newMovie") Movie newMovie, BindingResult bindingResult, Model model) {
 
-//        Coordinates test_coord = new Coordinates();
-//        test_coord.setX(1);
-//        test_coord.setY(1);
-
-//        newMovie.setDirector(getPerson());
-//        newMovie.setScreenwriter(getPerson());
-//        newMovie.setOperator(getPerson());
-//        newMovie.setGenre(MovieGenre.ACTION);
-//        newMovie.setMpaaRating(MpaaRating.NC_17);
-//        newMovie.setCoordinates(test_coord);
+//        if (movieRepo.existsById(newMovie.getId())) {
+//            movieRepo.deleteById(newMovie.getId());
+//            movieRepo.save(newMovie);
+//            return "redirect:/home/movies";
+//        }
         movieRepo.save(newMovie);
 
         return "redirect:/home";
@@ -65,19 +82,19 @@ public class MovieController {
 
     private static Person getPerson() {
         Location test_loc = new Location();
-        test_loc.setName("name");
-        test_loc.setX(1f);
-        test_loc.setY(1);
-        test_loc.setZ(1);
+        test_loc.setName("555");
+        test_loc.setX(5f);
+        test_loc.setY(5);
+        test_loc.setZ(5);
 
 
         Person test = new Person();
-        test.setName("123");
-        test.setEyeColor(Color.BLACK);
-        test.setHairColor(Color.BLACK);
-        test.setHeight(123.0f);
+        test.setName("555");
+        test.setEyeColor(Color.BLUE);
+        test.setHairColor(Color.BLUE);
+        test.setHeight(555f);
         test.setLocation(test_loc);
-        test.setNationality(Country.GERMANY);
+        test.setNationality(Country.RUSSIA);
         return test;
     }
 }

@@ -12,7 +12,7 @@ public class Movie {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_seq")
     @SequenceGenerator(name = "movie_seq", sequenceName = "movie_seq")
-    private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @Column(nullable = false)
     private String name; //Поле не может быть null, Строка не может быть пустой
     @OneToOne(cascade=CascadeType.ALL)
@@ -46,11 +46,11 @@ public class Movie {
 //    @ManyToOne
 //    private Client client;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

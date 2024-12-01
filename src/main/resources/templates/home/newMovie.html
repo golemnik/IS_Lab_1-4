@@ -9,18 +9,18 @@
     <h1>Add new film</h1>
 
     <form name="f" th:action="@{newMovie}" th:object="${newMovie}" method="post">
-
+        <input type="hidden" id="id" name="id" th:value="${newMovie.id}">
         <fieldset>
             <legend>Coordinates</legend>
             <table>
                 <tbody>
                     <tr>
                         <td> <label for="coordinates.x">Coordinate x</label> </td>
-                        <td> <input type="text" id="coordinates.x" name="coordinates.x" th:value="333"/> </td>
+                        <td> <input type="text" id="coordinates.x" name="coordinates.x" th:value="${newMovie.coordinates.x}"/> </td>
                     </tr>
                     <tr>
                         <td> <label for="coordinates.y">Coordinate y</label> </td>
-                        <td> <input type="text" id="coordinates.y" name="coordinates.y" th:value="333"/> </td>
+                        <td> <input type="text" id="coordinates.y" name="coordinates.y" th:value="${newMovie.coordinates.y}"/> </td>
                     </tr>
                 </tbody>
             </table>
@@ -28,9 +28,9 @@
 
         <table>
             <tr>
-                <td th:insert="~{home/formFragment::person_form(person='director')}"></td>
-                <td th:insert="~{home/formFragment::person_form(person='screenwriter')}"></td>
-                <td th:insert="~{home/formFragment::person_form(person='operator')}"></td>
+                <td th:insert="~{home/formFragment::person_form(person='director', params=${newMovie.director})}"></td>
+                <td th:insert="~{home/formFragment::person_form(person='screenwriter', params=${newMovie.screenwriter})}"></td>
+                <td th:insert="~{home/formFragment::person_form(person='operator', params=${newMovie.operator})}"></td>
             </tr>
         </table>
 
@@ -41,25 +41,25 @@
                 <tbody>
                 <tr>
                     <td> <label for="name"> Name </label> </td>
-                    <td> <input type="text" id="name" name="name" th:value="123"/> </td>
+                    <td> <input type="text" id="name" name="name" th:value="${newMovie.name}"/> </td>
                 </tr>
 
                 <tr>
                     <td> <label for="oscarsCount">Oscar amount</label> </td>
-                    <td> <input type="text" id="oscarsCount" name="oscarsCount" th:value="123"/> </td>
+                    <td> <input type="text" id="oscarsCount" name="oscarsCount" th:value="${newMovie.oscarsCount}"/> </td>
                 </tr>
                 <tr>
                     <td> <label for="budget">Budget</label> </td>
-                    <td> <input type="text" id="budget" name="budget" th:value="123"/> </td>
+                    <td> <input type="text" id="budget" name="budget" th:value="${newMovie.budget}"/> </td>
                 </tr>
                 <tr>
                     <td> <label for="totalBoxOffice">Total box office</label> </td>
-                    <td> <input type="text" id="totalBoxOffice" name="totalBoxOffice" th:value="123"/> </td>
+                    <td> <input type="text" id="totalBoxOffice" name="totalBoxOffice" th:value="${newMovie.totalBoxOffice}"/> </td>
                 </tr>
                 <tr>
                     <td> <label for="mpaaRating">MPAA Rating</label> </td>
                     <td>
-                        <select id="mpaaRating" name="mpaaRating">
+                        <select id="mpaaRating" name="mpaaRating" th:value="${newMovie.mpaaRating}">
                             <option value="PG">PG</option>
                             <option value="R">R</option>
                             <option value="NC_17">NC 17</option>
@@ -70,17 +70,17 @@
 
                 <tr>
                     <td> <label for="goldenPalmCount">Golden Palm amount</label> </td>
-                    <td> <input type="text" id="goldenPalmCount" name="goldenPalmCount" th:value="1"/> </td>
+                    <td> <input type="text" id="goldenPalmCount" name="goldenPalmCount" th:value="${newMovie.goldenPalmCount}"/> </td>
                 </tr>
                 <tr>
                     <td> <label for="length">length</label> </td>
-                    <td> <input type="text" id="length" name="length" th:value="22"/> </td>
+                    <td> <input type="text" id="length" name="length" th:value="${newMovie.length}"/> </td>
                 </tr>
 
                 <tr>
                     <td> <label for="genre">Genre</label> </td>
                     <td>
-                        <select id="genre" name="genre">
+                        <select id="genre" name="genre" th:value="${newMovie.genre}">
                             <option value="ACTION">Action</option>
                             <option value="MUSICAL">Musical</option>
                             <option value="ADVENTURE">Adventure</option>

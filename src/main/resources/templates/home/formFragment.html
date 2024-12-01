@@ -1,20 +1,22 @@
-<div th:fragment="person_form(person)">
+<div th:fragment="person_form(person, params)">
     <fieldset>
         <legend> <span th:text="${person}"> </span> </legend>
+
+        <input type="hidden" th:id="${person} + '.id'" th:name="${person} + '.id'" th:value="${params.id}">
         <table>
             <tbody>
             <tr>
                 <td> <label> Name </label> </td>
-                <td> <input type="text" th:id ="${person} + '.name'" th:name="${person} + '.name'" th:value="Unknown"/> </td>
+                <td> <input type="text" th:id ="${person} + '.name'" th:name="${person} + '.name'" th:value="${params.name}"/> </td>
             </tr>
             <tr>
                 <td> <label> Height </label> </td>
-                <td> <input type="text" th:id="${person} + '.height'" th:name="${person} + '.height'" th:value="170"/> </td>
+                <td> <input type="text" th:id="${person} + '.height'" th:name="${person} + '.height'" th:value="${params.height}"/> </td>
             </tr>
             <tr>
                 <td> <label>Eye color</label> </td>
                 <td>
-                    <select th:id="${person} + '.eyeColor'" th:name="${person} + '.eyeColor'">
+                    <select th:id="${person} + '.eyeColor'" th:name="${person} + '.eyeColor'" th:value="${params.eyeColor}">
                         <option th:value="BLACK">Black</option>
                         <option th:value="BLUE">BLue</option>
                         <option th:value="YELLOW">Yellow</option>
@@ -27,18 +29,18 @@
                 <td> <label>Hair Color</label> </td>
                 <td>
                     <select th:id="${person} + '.hairColor'" th:name="${person} + '.hairColor'">
-                        <option th:value="BLACK">Black</option>
-                        <option th:value="BLUE">BLue</option>
-                        <option th:value="YELLOW">Yellow</option>
-                        <option th:value="WHITE">White</option>
-                        <option th:value="BROWN">Brown</option>
+                        <option th:selected="${params.hairColor == T(com.golem.lab.classes.Color).BLACK}" th:value="BLACK" >Black</option>
+                        <option th:selected="${params.hairColor == T(com.golem.lab.classes.Color).BLUE}" th:value="BLUE">BLue</option>
+                        <option th:selected="${params.hairColor == T(com.golem.lab.classes.Color).YELLOW}" th:value="YELLOW">Yellow</option>
+                        <option th:selected="${params.hairColor == T(com.golem.lab.classes.Color).WHITE}" th:value="WHITE">White</option>
+                        <option th:selected="${params.hairColor == T(com.golem.lab.classes.Color).BROWN}" th:value="BROWN">Brown</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td> <label>Nationality</label> </td>
                 <td>
-                    <select th:id="${person} + '.nationality'" th:name="${person} + '.nationality'">
+                    <select th:id="${person} + '.nationality'" th:name="${person} + '.nationality'" th:value="${params.nationality}">
                         <option th:value="RUSSIA">Russia</option>
                         <option th:value="USA">USA</option>
                         <option th:value="GERMANY">Germany</option>
@@ -56,22 +58,22 @@
                 <tr>
                     <td> <label> Place name </label> </td>
                     <td> <input type="text" th:id="${person} + '.location.name'" th:name="${person} + '.location.name'"
-                                th:value="Unknown"/> </td>
+                                th:value="${params.location.name}"/> </td>
                 </tr>
                 <tr>
                     <td> <label> X </label> </td>
                     <td> <input type="text" th:id="${person} + '.location.x'" th:name="${person}+'.location.x'"
-                                th:value="1"/> </td>
+                                th:value="${params.location.x}"/> </td>
                 </tr>
                 <tr>
                     <td> <label> Y </label> </td>
                     <td> <input type="text" th:id="${person}+'.location.y'" th:name="${person}+'.location.y'"
-                                th:value="1"/> </td>
+                                th:value="${params.location.y}"/> </td>
                 </tr>
                 <tr>
                     <td> <label> Z </label> </td>
                     <td> <input type="text" th:id="${person}+'.location.z'" th:name="${person}+'.location.z'"
-                                th:value="1"/> </td>
+                                th:value="${params.location.z}"/> </td>
                 </tr>
                 </tbody>
             </table>
