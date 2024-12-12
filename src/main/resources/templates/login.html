@@ -2,33 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>Title</title>
 </head>
 
 <body>
-    <h1>Авторизация</h1>
+    <h1>Authorisation</h1>
     <div>
         <form name="f" th:action="@{/perform-login}" method="post">
 
             <div th:if="${param.error}" class="alert alert-error">
-                Неправильные имя и пароль.
+                Wrong name or password.
             </div>
 
-            <fieldset>
+            <fieldset class="field_set">
                 <legend>Вход</legend>
                 <table>
                     <tbody>
                         <tr>
-                            <td> <label for="username">Имя</label> </td>
+                            <td> <label for="username">Username</label> </td>
                             <td> <input type="text" id="username" name="username"/> </td>
                         </tr>
                         <tr>
-                            <td> <label for="password">Пароль</label> </td>
+                            <td> <label for="password">Password</label> </td>
                             <td> <input type="password" id="password" name="password"/> </td>
                         </tr>
                         <tr>
                             <td> </td>
-                            <td> <button type="submit" class="btn">Войти</button> </td>
+                            <td> <button type="submit" class="btn">Login</button> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -36,8 +37,8 @@
         </form>
     </div>
     <div>
-        <fieldset>
-            <a th:href="@{hello}">Ко входу</a> <br>
+        <fieldset class="field_set">
+            <a th:href="@{hello}">Back</a> <br>
         </fieldset>
     </div>
 </body>

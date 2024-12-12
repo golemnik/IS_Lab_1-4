@@ -5,69 +5,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Movies list</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
 <body>
     <h1>Movies list</h1>
-    <fieldset>
-        <table>
-            <thead>
-            <tr>
-                <th scope="row"></th>
-                <th scope="row"></th>
-                <th scope="row">Id</th>
-                <th scope="row">Name</th>
-                <th scope="row">Coordinate X</th>
-                <th scope="row">Coordinate Y</th>
-                <th scope="row">Creation Date</th>
-                <th scope="row">Oscar amount</th>
-                <th scope="row">Budget</th>
-                <th scope="row">Total boxing office</th>
-                <th scope="row">MPAA Rating</th>
-                <th scope="row">Director</th>
-                <th scope="row">Screenwriter</th>
-                <th scope="row">Operator</th>
-                <th scope="row">Length</th>
-                <th scope="row">Golden palm amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="movie: ${movies}">
-                <td>
-                    <form th:action="@{deleteMovie}" method="post">
-                        <input type="hidden" th:value="${movie.id}" name="movieId"/>
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{updateMovie}" method="post">
-                        <input type="hidden" th:value="${movie.id}" name="movieId"/>
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
 
-                <td th:text="${movie.id}"></td>
-                <td th:text="${movie.name}"></td>
-                <td th:text="${movie.coordinates.x}"></td>
-                <td th:text="${movie.coordinates.y}"></td>
-                <td th:text="${movie.creationDate}"></td>
-                <td th:text="${movie.oscarsCount}"></td>
-                <td th:text="${movie.budget}"></td>
-                <td th:text="${movie.totalBoxOffice}"></td>
-                <td th:text="${movie.mpaaRating}"></td>
-                <td th:text="${movie.director.name}"></td>
-                <td th:text="${movie.screenwriter.name}"></td>
-                <td th:text="${movie.operator.name}"></td>
-                <td th:text="${movie.length}"></td>
-                <td th:text="${movie.goldenPalmCount}"></td>
-                <!--                <td th:text="${movie.client}"></td>-->
-            </tr>
-            </tbody>
-        </table>
+    <fieldset class="field_set" >
+        <form th:action="@{filter}" method="post">
+            <input type="text" id="filter" name="filter" th:value="${filter}"/>
+
+            <select id="field" name="field">
+                <option th:selected="${field == 'Name'}" value="Name">Name</option>
+                <option th:selected="${field == 'Coord X'}" value="Coord X">Coord X</option>
+                <option th:selected="${field == 'Coord Y'}" value="Coord Y">Coord Y</option>
+                <option th:selected="${field == 'Creation Date'}" value="Creation Date">Creation Date</option>
+                <option th:selected="${field == 'Oscar amount'}" value="Oscar amount">Oscar amount</option>
+                <option th:selected="${field == 'Budget'}" value="Budget">Budget</option>
+                <option th:selected="${field == 'MPAA Rating'}" value="MPAA Rating">MPAA Rating</option>
+                <option th:selected="${field == 'Total boxing office'}" value="Total boxing office">Total boxing office</option>
+                <option th:selected="${field == 'Length'}" value="Length">Length</option>
+                <option th:selected="${field == 'Golden palm amount'}" value="Golden palm amount">Golden palm amount</option>
+            </select>
+
+            <select id="sort" name="sort">
+                <option th:selected="${sort == 0}" th:value="0">-//-</option>
+                <option th:selected="${sort == 1}" th:value="1" >/\</option>
+                <option th:selected="${sort == -1}" th:value="-1">\/</option>
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
     </fieldset>
 
+    <table id="movies_table" style="width:100%">
+        <thead>
+        <tr>
+            <th scope="row"></th>
+            <th scope="row"></th>
+            <th scope="row">Id</th>
+            <th scope="row">Name</th>
+            <th scope="row">Coordinate X</th>
+            <th scope="row">Coordinate Y</th>
+            <th scope="row">Creation Date</th>
+            <th scope="row">Oscar amount</th>
+            <th scope="row">Budget</th>
+            <th scope="row">Total boxing office</th>
+            <th scope="row">MPAA Rating</th>
+            <th scope="row">Director</th>
+            <th scope="row">Screenwriter</th>
+            <th scope="row">Operator</th>
+            <th scope="row">Length</th>
+            <th scope="row">Golden palm amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="movie: ${movies}">
+            <td>
+                <form th:action="@{deleteMovie}" method="post">
+                    <input type="hidden" th:value="${movie.id}" name="movieId"/>
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{updateMovie}" method="post">
+                    <input type="hidden" th:value="${movie.id}" name="movieId"/>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
 
-    <fieldset>
-        <a th:href="@{/home}">В главное меню</a> <br>
+            <td th:text="${movie.id}"></td>
+            <td th:text="${movie.name}"></td>
+            <td th:text="${movie.coordinates.x}"></td>
+            <td th:text="${movie.coordinates.y}"></td>
+            <td th:text="${movie.creationDate}"></td>
+            <td th:text="${movie.oscarsCount}"></td>
+            <td th:text="${movie.budget}"></td>
+            <td th:text="${movie.totalBoxOffice}"></td>
+            <td th:text="${movie.mpaaRating}"></td>
+            <td th:text="${movie.director.name}"></td>
+            <td th:text="${movie.screenwriter.name}"></td>
+            <td th:text="${movie.operator.name}"></td>
+            <td th:text="${movie.length}"></td>
+            <td th:text="${movie.goldenPalmCount}"></td>
+            <!--                <td th:text="${movie.client}"></td>-->
+        </tr>
+        </tbody>
+    </table>
+
+
+    <fieldset class="field_set">
+        <a th:href="@{/home}">Back to home</a> <br>
     </fieldset>
 
 </body>

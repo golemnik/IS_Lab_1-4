@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class MovieController {
@@ -19,6 +20,44 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
+
+
+    @RequestMapping("/home/filter")
+    public String filterPerson(Model model, @RequestParam String field, @RequestParam String filter, @RequestParam int sort) {
+        List<Movie> movies = movieService.findAllMovies();
+
+        movies = movies.stream()
+                .filter(movie -> !Objects.equals(field, "Name")                    || movie.getName().contains(filter))
+                .filter(movie -> !Objects.equals(field, "Coord X")                 || String.valueOf(movie.getCoordinates().getX()).contains(filter))
+                .filter(movie -> !Objects.equals(field, "Coord Y")                 || String.valueOf(movie.getCoordinates().getY()).contains(filter))
+                .filter(movie -> !Objects.equals(field, "Creation Date")           || movie.getCreationDate().toString().contains(filter))
+                .filter(movie -> !Objects.equals(field, "Oscar amount")            || String.valueOf(movie.getOscarsCount()).contains(filter))
+                .filter(movie -> !Objects.equals(field, "Budget")                  || String.valueOf(movie.getBudget()).contains(filter))
+                .filter(movie -> !Objects.equals(field, "MPAA Rating")             || movie.getMpaaRating().toString().contains(filter))
+                .filter(movie -> !Objects.equals(field, "Total boxing office")     || String.valueOf(movie.getTotalBoxOffice()).contains(filter))
+                .filter(movie -> !Objects.equals(field, "Length")                  || String.valueOf(movie.getLength()).contains(filter))
+                .filter(movie -> !Objects.equals(field, "Golden palm amount")      || String.valueOf(movie.getGoldenPalmCount()).contains(filter))
+
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Name"))                ? movie1.getName().compareTo(movie2.getName())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Coord X"))             ? Float.compare(movie1.getCoordinates().getX(), movie2.getCoordinates().getX())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Coord Y"))             ? Float.compare(movie1.getCoordinates().getY(), movie2.getCoordinates().getY())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Creation Date"))       ? movie1.getCreationDate().compareTo(movie2.getCreationDate())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Oscar amount"))        ? Integer.compare(movie1.getOscarsCount(), movie2.getOscarsCount())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Budget"))              ? Float.compare(movie1.getBudget(), movie2.getBudget())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "MPAA Rating"))         ? movie1.getMpaaRating().compareTo(movie2.getMpaaRating())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Total boxing office")) ? Float.compare(movie1.getTotalBoxOffice(), movie2.getTotalBoxOffice())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Length"))              ? Integer.compare(movie1.getLength(), movie2.getLength())*sort : 0)
+                .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Golden palm amount"))  ? Long.compare(movie1.getGoldenPalmCount(), movie2.getGoldenPalmCount())*sort : 0)
+                .toList();
+
+
+        model.addAttribute("field", field);
+        model.addAttribute("filter", filter);
+        model.addAttribute("sort", sort);
+        model.addAttribute("movies", movies);
+        return "/home/movies";
+    }
+    
 
     @RequestMapping("/home/updateMovie")
     public String updateMovie(Model model, @RequestParam int movieId) {
@@ -69,15 +108,8 @@ public class MovieController {
 
     @PostMapping(value = "/home/newMovie")
     public String addMovie(@ModelAttribute("newMovie") Movie newMovie, BindingResult bindingResult, Model model) {
-
-//        if (movieRepo.existsById(newMovie.getId())) {
-//            movieRepo.deleteById(newMovie.getId());
-//            movieRepo.save(newMovie);
-//            return "redirect:/home/movies";
-//        }
         movieRepo.save(newMovie);
-
-        return "redirect:/home";
+        return "redirect:/home/movies";
     }
 
     private static Person getPerson() {

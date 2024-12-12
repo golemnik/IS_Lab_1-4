@@ -3,13 +3,14 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>Error</title>
 </head>
 <body>
-    <h1>Something went wrong....</h1>
+    <h1>Our goblins screwed up... Sorry)</h1>
 
-    <fieldset sec:authorize="isAuthenticated()">
-        <a th:href="@{/home}">В главное меню</a>
+    <fieldset class="field_set" sec:authorize="isAuthenticated()">
+        <a th:href="@{/home}">Back to home</a>
     </fieldset>
 </body>
 </html>

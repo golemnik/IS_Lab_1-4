@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>Admin page</title>
 </head>
 <body>
-    <h1> Список пользователей</h1>
+    <h1> User list</h1>
+    <fieldset class="field_set" >
     <table>
         <thead>
         <tr>
@@ -25,12 +27,19 @@
                     <li th:each="role : ${user.roles}" th:text="${role.name}"></li>
                 </ul>
             </td>
+
+            <td th:class="${user.wanna_admin ? 'see' : 'not_see'}">
+                <form th:action="@{/admin/set_admin}" method="post" style="display:inline">
+                    <input type="hidden" th:value="${user.username}" name="username">
+                    <button type="submit" value="make_admin"> Set admin</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
-
-    <fieldset>
-        <a th:href="@{home}">В главное меню</a> <br>
+    </fieldset>
+    <fieldset class="field_set">
+        <a th:href="@{home}">Back to home</a> <br>
     </fieldset>
 
 </body>

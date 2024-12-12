@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Movie</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <title>Movie Form</title>
 </head>
 <body>
 
-    <h1>Add new film</h1>
+    <h1>Film fields</h1>
+
 
     <form name="f" th:action="@{newMovie}" th:object="${newMovie}" method="post">
         <input type="hidden" id="id" name="id" th:value="${newMovie.id}">
-        <fieldset>
+        <fieldset class="field_set">
             <legend>Coordinates</legend>
             <table>
                 <tbody>
@@ -35,7 +37,7 @@
         </table>
 
 
-        <fieldset>
+        <fieldset class="field_set">
             <legend>Film</legend>
             <table>
                 <tbody>
@@ -92,14 +94,14 @@
 
                 <tr>
                     <td> </td>
-                    <td> <button type="submit" class="btn">Create</button> </td>
+                    <td> <button type="submit" class="btn">Apply</button> </td>
                 </tr>
                 </tbody>
             </table>
         </fieldset>
     </form>
 
-    <fieldset>
+    <fieldset class="field_set">
         <a th:href="@{/home}">Back to home</a> <br>
     </fieldset>
 </body>

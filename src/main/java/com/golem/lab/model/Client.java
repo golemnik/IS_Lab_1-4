@@ -15,6 +15,15 @@ public class Client implements Serializable {
     private String password;
     private String passwordConfirm;
     private Set<Role> roles;
+    private boolean wanna_admin = false;
+
+    public boolean isWanna_admin() {
+        return wanna_admin;
+    }
+    public void setWanna_admin(boolean wanna_admin) {
+        this.wanna_admin = wanna_admin;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

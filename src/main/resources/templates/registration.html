@@ -2,34 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>Registration</title>
 </head>
 
 <body>
 
-    <h1>Регистрация</h1>
+    <h1>Registration</h1>
 
     <form name="f" th:action="@{registration}" th:object="${userForm}" method="post">
-        <fieldset>
-            <legend>Зарегистрироваться</legend>
+        <fieldset class="field_set">
+            <legend>Register</legend>
 
             <table>
                 <tbody>
                 <tr>
-                    <td> <label for="username">Имя</label> </td>
+                    <td> <label for="username">Name</label> </td>
                     <td> <input type="text" id="username" name="username"/> </td>
                 </tr>
                 <tr>
-                    <td> <label for="password">Пароль</label> </td>
+                    <td> <label for="password">Password</label> </td>
                     <td> <input type="password" id="password" name="password"/> </td>
                 </tr>
                 <tr>
-                    <td> <label for="passwordConfirm">Подтверждение пароля</label> </td>
+                    <td> <label for="passwordConfirm">Confirm password</label> </td>
                     <td> <input type="password" id="passwordConfirm" name="passwordConfirm"/> </td>
                 </tr>
                 <tr>
                     <td> </td>
-                    <td> <button type="submit" class="btn">Зарегистрироваться</button> </td>
+                    <td> <button type="submit" class="btn">Register</button> </td>
                 </tr>
                 </tbody>
             </table>
@@ -37,8 +38,8 @@
     </form>
 
     <div>
-        <fieldset>
-            <a th:href="@{hello}">Ко входу</a> <br>
+        <fieldset class="field_set">
+            <a th:href="@{hello}">Back</a> <br>
         </fieldset>
     </div>
 </body>
