@@ -1,5 +1,6 @@
 package com.golem.lab.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -70,18 +71,20 @@ public class MovieController {
             ObjectMapper mapper = JsonMapper.builder()
                     .addModule(new JavaTimeModule())
                     .build();
-            Movie movie = mapper.readValue(content, Movie.class);
+            Collection<Movie> movies = mapper.readValue(content, new TypeReference<List<Movie>>(){});
 
-            movie.setId(0);
-            movie.getCoordinates().setId(0);
-            movie.getDirector().setId(0);
-            movie.getDirector().getLocation().setId(0);
-            movie.getOperator().setId(0);
-            movie.getOperator().getLocation().setId(0);
-            movie.getScreenwriter().setId(0);
-            movie.getScreenwriter().getLocation().setId(0);
+            for (Movie movie : movies) {
+                movie.setId(0);
+                movie.getCoordinates().setId(0);
+                movie.getDirector().setId(0);
+                movie.getDirector().getLocation().setId(0);
+                movie.getOperator().setId(0);
+                movie.getOperator().getLocation().setId(0);
+                movie.getScreenwriter().setId(0);
+                movie.getScreenwriter().getLocation().setId(0);
+                movieRepo.save(movie);
+            }
 
-            movieRepo.save(movie);
 //            System.out.println(content);
         }
         catch (Exception e) {
