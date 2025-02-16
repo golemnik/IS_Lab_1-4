@@ -14,12 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -36,7 +37,7 @@ public class MovieController {
     public ResponseEntity<byte[]> demo() { // (1) Return byte array response
 
         List<Movie> movies = movieService.findAllMovies();
-        Movie movie = movies.get(0);
+//        Movie movie = movies.get(0);
 
         ObjectMapper mapper = JsonMapper.builder()
                 .addModule(new JavaTimeModule())
@@ -46,7 +47,7 @@ public class MovieController {
 
         String demoContent = "";
         try {
-            demoContent = ow.writeValueAsString(movie);
+            demoContent = ow.writeValueAsString(movies);
         }
         catch (Exception e) {
             demoContent = e.toString();
@@ -54,14 +55,41 @@ public class MovieController {
 
 //        String demoContent = "This is dynamically generated content in demo file"; // (2) Dynamic content
 
-
-
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE); // (3) Content-Type: application/octet-stream
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename("demo-file.json").build().toString()); // (4) Content-Disposition: attachment; filename="demo-file.txt"
         return ResponseEntity.ok().headers(httpHeaders).body(demoContent.getBytes()); // (5) Return Response
     }
+
+    @PostMapping("/home/uploadFile")
+    public String submit(@RequestParam("file") MultipartFile file) {
+
+        try {
+            String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+
+            ObjectMapper mapper = JsonMapper.builder()
+                    .addModule(new JavaTimeModule())
+                    .build();
+            Movie movie = mapper.readValue(content, Movie.class);
+
+            movie.setId(0);
+            movie.getCoordinates().setId(0);
+            movie.getDirector().setId(0);
+            movie.getDirector().getLocation().setId(0);
+            movie.getOperator().setId(0);
+            movie.getOperator().getLocation().setId(0);
+            movie.getScreenwriter().setId(0);
+            movie.getScreenwriter().getLocation().setId(0);
+
+            movieRepo.save(movie);
+//            System.out.println(content);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/home/movies";
+    }
+
 
     @RequestMapping("/home/sop_action")
     public String specialOps(Model model, @RequestParam int sop, @RequestParam int gpp, @RequestParam String dgpp, @RequestParam int lpp) {
@@ -135,7 +163,7 @@ public class MovieController {
         return "/home/movies";
     }
 
-        @RequestMapping("/home/filter")
+    @RequestMapping("/home/filter")
     public String filterPerson(Model model, @RequestParam String field, @RequestParam String filter, @RequestParam int sort) {
         List<Movie> movies = movieService.findAllMovies();
 

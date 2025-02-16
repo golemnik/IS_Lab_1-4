@@ -10,7 +10,7 @@
 	</div>
 
 	<div>
-		<form method="POST" th:enctype="@{multipart/form-data}" th:action="@{docs}">
+		<form method="POST" th:enctype="@{multipart/form-data}" th:action="@{uploadFile}">
 			<table>
 				<tr>
 					<td>File to upload:</td>
@@ -30,13 +30,13 @@
 		</form>
 	</div>
 
-	<div>
+	<fieldset>
 		<ul>
 			<li th:each="file : ${files}">
 				<a th:href="${file}" th:text="${file}" />
 			</li>
 		</ul>
-	</div>
+	</fieldset>
 
 	<fieldset class="field_set">
 		<a th:href="@{/home}">Back to home</a> <br>
