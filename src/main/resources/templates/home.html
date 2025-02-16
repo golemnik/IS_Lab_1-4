@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">-->
+
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet" />
@@ -25,17 +27,27 @@
         <a th:href="@{home/movies}">All films</a> <br>
     </fieldset>
 
+
+    <fieldset class="field_set">
+        <a th:href="@{home/docs}">Docs</a> <br>
+<!--        <fieldset class="field_set">-->
+
+<!--        </fieldset>-->
+    </fieldset>
+
     <div sec:authorize="hasAuthority('ADMIN')">
         <fieldset class="field_set">
             <a th:href="@{admin}" > Administration </a> <br>
         </fieldset>
     </div>
 
-    <fieldset class="field_set">
-        <form th:action="@{home/make_admin}" method="post" style="display:inline">
-            <button type="submit" value="make_admin"> MAKE ME ADMIN!!!</button>
-        </form>
-    </fieldset>
+    <div sec:authorize="!hasAuthority('ADMIN')">
+        <fieldset class="field_set">
+            <form th:action="@{home/make_admin}" method="post" style="display:inline">
+                <button type="submit" value="make_admin"> MAKE ME ADMIN!!!</button>
+            </form>
+        </fieldset>
+    </div>
 
     <fieldset class="field_set">
         <form th:action="@{/logout}" method="post" style="display:inline">

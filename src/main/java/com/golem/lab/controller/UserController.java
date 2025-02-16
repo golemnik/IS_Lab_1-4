@@ -79,7 +79,7 @@ public class UserController {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
-        return "/login";
+        return "login";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)

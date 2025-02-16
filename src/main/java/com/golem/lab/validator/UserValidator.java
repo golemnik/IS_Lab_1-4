@@ -8,14 +8,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-/**
- *To provide input-data validation for /registration controller with 
- * Spring Validator, we implement org.springframework.validation.Validator. 
- * Error codes, e.g. Size.userForm.username, are defined 
- * by validation.properties
- * 
- * @author raitis
- */
 
 @Component
 public class UserValidator implements Validator{

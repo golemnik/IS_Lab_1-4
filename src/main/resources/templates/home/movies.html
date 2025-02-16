@@ -37,6 +37,55 @@
         </form>
     </fieldset>
 
+    <fieldset>
+        <legend>Special operations</legend>
+
+        <form th:action="@{sop_action}" method="post">
+
+            <fieldset>
+                <legend>Operation choose</legend>
+                <select id="sop" name="sop">
+                    <option th:selected="${sop == 1}" th:value="1">Return one(any) movie, name field value is the maximum.</option>
+                    <option th:selected="${sop == 2}" th:value="2">Return the number of movies whose goldenPalmCount field value is greater than the specified value.</option>
+                    <option th:selected="${sop == 3}" th:value="3">Return an array of unique goldenPalmCount field values for all movies.</option>
+                    <option th:selected="${sop == 4}" th:value="4">Nullify all Oscars from all films by directors who have made at least one film in the specified genre.</option>
+                    <option th:selected="${sop == 5}" th:value="5">Additionally, award all films with a duration greater than the specified number of Oscars.</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>GoldenPalm amount for op#2</legend>
+                <input type="number" id="gpp" name="gpp" th:min="0" th:step="1" th:value="${gpp!=null?gpp:0}"/>
+            </fieldset>
+
+            <fieldset>
+                <legend>Genre for op#4</legend>
+<!--                <input type="number" id="lpp" name="lpp" th:min="0" th:step="1" th:value="${lpp!=null?lpp:0}"/>-->
+                <select id="dgpp" name="dgpp">
+                    <option th:selected="${dgpp == 'ACTION'}" value="ACTION">Action</option>
+                    <option th:selected="${dgpp == 'MUSICAL'}" value="MUSICAL">Musical</option>
+                    <option th:selected="${dgpp == 'ADVENTURE'}" value="ADVENTURE">Adventure</option>
+                    <option th:selected="${dgpp == 'HORROR'}" value="HORROR">Horror</option>
+                    <option th:selected="${dgpp == 'SCIENCE_FICTION'}" value="SCIENCE_FICTION">Science fiction</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Movie length for op#5</legend>
+                <input type="number" id="lpp" name="lpp" th:min="0" th:step="1" th:value="${lpp!=null?lpp:0}"/>
+            </fieldset>
+
+            <fieldset>
+                <button type="submit">Operation execute</button>
+            </fieldset>
+        </form>
+
+        <fieldset>
+            <legend>Operation result:</legend>
+            <p th:text="${sop_result}"></p>
+        </fieldset>
+    </fieldset>
+
     <table id="movies_table" style="width:100%">
         <thead>
         <tr>

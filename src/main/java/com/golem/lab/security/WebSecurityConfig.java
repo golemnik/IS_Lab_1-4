@@ -27,6 +27,7 @@ public class WebSecurityConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
+
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

@@ -1,0 +1,5 @@
+insert into role (id, name) values (1, 'USER'), (2, 'ADMIN');
+insert into user_role (user_id, role_id) VALUES (10000, 1), (10001, 2);
+insert into client (id, password, username, wanna_admin) VALUES
+     (10000, '{noop}1234', 'user', false),
+     (10001, '{noop}1234', 'admin', true);

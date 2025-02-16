@@ -1,16 +1,26 @@
 package com.golem.lab.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.golem.lab.classes.*;
 import com.golem.lab.repository.MovieRepo;
 import com.golem.lab.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 public class MovieController {
@@ -22,7 +32,110 @@ public class MovieController {
     private MovieService movieService;
 
 
-    @RequestMapping("/home/filter")
+    @PostMapping(value = "/home/demo-file-download")
+    public ResponseEntity<byte[]> demo() { // (1) Return byte array response
+
+        List<Movie> movies = movieService.findAllMovies();
+        Movie movie = movies.get(0);
+
+        ObjectMapper mapper = JsonMapper.builder()
+                .addModule(new JavaTimeModule())
+                .build();
+
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+
+        String demoContent = "";
+        try {
+            demoContent = ow.writeValueAsString(movie);
+        }
+        catch (Exception e) {
+            demoContent = e.toString();
+        }
+
+//        String demoContent = "This is dynamically generated content in demo file"; // (2) Dynamic content
+
+
+
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE); // (3) Content-Type: application/octet-stream
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename("demo-file.json").build().toString()); // (4) Content-Disposition: attachment; filename="demo-file.txt"
+        return ResponseEntity.ok().headers(httpHeaders).body(demoContent.getBytes()); // (5) Return Response
+    }
+
+    @RequestMapping("/home/sop_action")
+    public String specialOps(Model model, @RequestParam int sop, @RequestParam int gpp, @RequestParam String dgpp, @RequestParam int lpp) {
+
+        model.addAttribute("sop", sop);
+        model.addAttribute("gpp", gpp);
+        model.addAttribute("dgpp", dgpp);
+        model.addAttribute("lpp", lpp);
+
+
+        List<Movie> movies = movieService.findAllMovies();
+        switch (sop) {
+            case 1:
+                Movie movie_n = movies.stream()
+                        .max(Comparator.comparing(Movie::getName)).get();
+                model.addAttribute("sop_result", "Movie: id(" + movie_n.getId() + ") name(" + movie_n.getName()+").");
+
+                break;
+            case 2:
+                long gp_count = movies.stream()
+                        .filter(movie -> movie.getGoldenPalmCount() > gpp)
+                        .count();
+                model.addAttribute("sop_result", "There are "+ gp_count+" films, which have more than "+gpp+" golden palms .");
+
+                break;
+            case 3:
+                List<Long> uniqueGoldenPalmCounts = movies.stream()
+                        .map(Movie::getGoldenPalmCount)
+                        .distinct()
+                        .toList();
+
+                model.addAttribute("sop_result", "Unique goldenpalms values: " + uniqueGoldenPalmCounts);
+
+                break;
+            case 4:
+                int ctr = 0;
+                List<Person> directors = movies.stream()
+                        .filter(mov -> mov.getGenre().equals(MovieGenre.valueOf(dgpp)))
+                        .map(Movie::getDirector)
+                        .toList();
+                for (Movie m : movies) {
+                    for (Person p : directors) {
+                        if (m.getDirector().equals(p)) {
+                            m.setOscarsCount(0);
+                            movieRepo.save(m);
+                            ctr++;
+                            break;
+                        }
+                    }
+                }
+                model.addAttribute("sop_result", "Oscars was nullified for "+ctr+" movies totally. Their directors was seen in genre :" + dgpp);
+
+                break;
+            case 5:
+                int cntr = 0;
+                for (Movie m : movies) {
+                    if (m.getLength() > lpp) {
+                        cntr++;
+                        m.setOscarsCount(m.getOscarsCount()+1);
+                        movieRepo.save(m);
+                    }
+                }
+
+                model.addAttribute("sop_result", "For length "+lpp+" was updated "+cntr+" movies.");
+
+                break;
+        }
+
+        model.addAttribute("movies", movies);
+
+        return "/home/movies";
+    }
+
+        @RequestMapping("/home/filter")
     public String filterPerson(Model model, @RequestParam String field, @RequestParam String filter, @RequestParam int sort) {
         List<Movie> movies = movieService.findAllMovies();
 
@@ -50,14 +163,18 @@ public class MovieController {
                 .sorted((movie1, movie2) -> (sort == 0 || Objects.equals(field, "Golden palm amount"))  ? Long.compare(movie1.getGoldenPalmCount(), movie2.getGoldenPalmCount())*sort : 0)
                 .toList();
 
-
         model.addAttribute("field", field);
         model.addAttribute("filter", filter);
         model.addAttribute("sort", sort);
         model.addAttribute("movies", movies);
+
+
+        if (model.getAttribute("sop_result") == null) {
+            model.addAttribute("sop_result", "No special operations was done recently.");
+        }
+
         return "/home/movies";
     }
-    
 
     @RequestMapping("/home/updateMovie")
     public String updateMovie(Model model, @RequestParam int movieId) {
@@ -77,6 +194,10 @@ public class MovieController {
     public String getMovies(Model model) {
         List<Movie> movies = movieService.findAllMovies();
         model.addAttribute("movies", movies);
+
+    if (model.getAttribute("sop_result") == null) {
+        model.addAttribute("sop_result", "No special operations was done recently.");
+    }
 
         return "/home/movies";
     }
