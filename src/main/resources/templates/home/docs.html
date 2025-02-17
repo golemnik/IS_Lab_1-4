@@ -31,11 +31,47 @@
 	</div>
 
 	<fieldset>
-		<ul>
-			<li th:each="file : ${files}">
-				<a th:href="${file}" th:text="${file}" />
-			</li>
-		</ul>
+<!--		<ul>-->
+<!--			<li th:each="fio : ${fios}">-->
+<!--				<a th:href="${fio}" th:text="${fio}" />-->
+<!--			</li>-->
+<!--		</ul>-->
+		<table id="fios_table" style="width:100%">
+			<thead>
+			<tr>
+				<th scope="row">--</th>
+				<th scope="row">--</th>
+				<th scope="row">Id</th>
+				<th scope="row">Owner</th>
+				<th scope="row">Finished</th>
+				<th scope="row">Objects amount</th>
+
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="fio: ${fios}">
+				<td>
+<!--					<form th:action="@{deleteMovie}" method="post">-->
+<!--						<input type="hidden" th:value="${movie.id}" name="movieId"/>-->
+<!--						<button type="submit">Delete</button>-->
+<!--					</form>-->
+					<button type="submit">DO NOTHING</button>
+				</td>
+				<td>
+<!--					<form th:action="@{updateMovie}" method="post">-->
+<!--						<input type="hidden" th:value="${movie.id}" name="movieId"/>-->
+<!--						<button type="submit">Update</button>-->
+<!--					</form>-->
+					<button type="submit">DO NOTHING</button>
+				</td>
+
+				<td th:text="${fio.id}"></td>
+				<td th:text="${fio.getClient().getUsername()}"></td>
+				<td th:text="${fio.isFinished()}"></td>
+				<td th:text="${fio.getObjectsImported()}"></td>
+			</tr>
+			</tbody>
+		</table>
 	</fieldset>
 
 	<fieldset class="field_set">

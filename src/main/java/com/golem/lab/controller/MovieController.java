@@ -6,33 +6,60 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.golem.lab.classes.*;
+import com.golem.lab.model.Client;
+import com.golem.lab.repository.FioRepo;
 import com.golem.lab.repository.MovieRepo;
+import com.golem.lab.service.FIOService;
 import com.golem.lab.service.MovieService;
+import com.golem.lab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class MovieController {
 
     @Autowired
     private MovieRepo movieRepo;
-
     @Autowired
     private MovieService movieService;
 
+//    @Autowired
+//    private FioRepo fioRepo;
+    @Autowired
+    private FIOService fioService;
+//    @Autowired
+//    private UserService userService;
+
+
+    @GetMapping("/home/docs")
+    public String getDocs(Model model) {
+        List<FileImportOperation> fios = fioService.findAllFIOs();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+            fios = fios.stream()
+                    .filter(fio -> fio.getClient().getUsername().equals(auth.getName()))
+                    .toList();
+        }
+
+        model.addAttribute("fios", fios);
+
+        return "/home/docs";
+    }
 
     @PostMapping(value = "/home/demo-file-download")
     public ResponseEntity<byte[]> demo() { // (1) Return byte array response
@@ -82,9 +109,8 @@ public class MovieController {
                 movie.getOperator().getLocation().setId(0);
                 movie.getScreenwriter().setId(0);
                 movie.getScreenwriter().getLocation().setId(0);
-                movieRepo.save(movie);
             }
-
+            movieRepo.saveAll(movies);
 //            System.out.println(content);
         }
         catch (Exception e) {
@@ -92,7 +118,6 @@ public class MovieController {
         }
         return "redirect:/home/movies";
     }
-
 
     @RequestMapping("/home/sop_action")
     public String specialOps(Model model, @RequestParam int sop, @RequestParam int gpp, @RequestParam String dgpp, @RequestParam int lpp) {
