@@ -12,6 +12,7 @@ import com.golem.lab.repository.MovieRepo;
 import com.golem.lab.service.FIOService;
 import com.golem.lab.service.MovieService;
 import com.golem.lab.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -37,12 +38,12 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-//    @Autowired
-//    private FioRepo fioRepo;
+    @Autowired
+    private FioRepo fioRepo;
     @Autowired
     private FIOService fioService;
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/home/docs")
@@ -89,8 +90,12 @@ public class MovieController {
         return ResponseEntity.ok().headers(httpHeaders).body(demoContent.getBytes()); // (5) Return Response
     }
 
+    @Transactional
     @PostMapping("/home/uploadFile")
     public String submit(@RequestParam("file") MultipartFile file) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        FileImportOperation fio = new FileImportOperation();
+        fio.setClient(userService.findByUsername(auth.getName()));
 
         try {
             String content = new String(file.getBytes(), StandardCharsets.UTF_8);
@@ -110,11 +115,18 @@ public class MovieController {
                 movie.getScreenwriter().setId(0);
                 movie.getScreenwriter().getLocation().setId(0);
             }
+
+            fio.setFinished(true);
+            fio.setObjectsImported(movies.size());
+
             movieRepo.saveAll(movies);
-//            System.out.println(content);
+
         }
         catch (Exception e) {
+            fio.setFinished(false);
+            fio.setObjectsImported(0);
             System.out.println(e.getMessage());
+            fioRepo.save(fio);
         }
         return "redirect:/home/movies";
     }
