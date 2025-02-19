@@ -1,18 +1,12 @@
 package com.golem.lab.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.golem.lab.classes.*;
-import com.golem.lab.model.Client;
-import com.golem.lab.repository.FioRepo;
 import com.golem.lab.repository.MovieRepo;
-import com.golem.lab.service.FIOService;
-import com.golem.lab.service.MovieService;
-import com.golem.lab.service.UserService;
-import jakarta.transaction.Transactional;
+import com.golem.lab.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Controller
@@ -39,11 +32,10 @@ public class MovieController {
     private MovieService movieService;
 
     @Autowired
-    private FioRepo fioRepo;
-    @Autowired
     private FIOService fioService;
     @Autowired
-    private UserService userService;
+    private CompoundImportService importService;
+
 
     @GetMapping("/home/docs")
     public String getDocs(Model model) {
@@ -92,39 +84,12 @@ public class MovieController {
     @PostMapping("/home/uploadFile")
     public String submit(@RequestParam("file") MultipartFile file) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        FileImportOperation fio = new FileImportOperation();
-        fio.setClient(userService.findByUsername(auth.getName()));
 
         try {
-            String content = new String(file.getBytes(), StandardCharsets.UTF_8);
-
-            ObjectMapper mapper = JsonMapper.builder()
-                    .addModule(new JavaTimeModule())
-                    .build();
-            Collection<Movie> movies = mapper.readValue(content, new TypeReference<List<Movie>>(){});
-
-            for (Movie movie : movies) {
-                movie.setId(0);
-                movie.getCoordinates().setId(0);
-                movie.getDirector().setId(0);
-                movie.getDirector().getLocation().setId(0);
-                movie.getOperator().setId(0);
-                movie.getOperator().getLocation().setId(0);
-                movie.getScreenwriter().setId(0);
-                movie.getScreenwriter().getLocation().setId(0);
-            }
-
-            fio.setFinished(true);
-            fio.setObjectsImported(movies.size());
-
-            movieRepo.saveAll(movies);
-        }
-        catch (Exception e) {
-            fio.setFinished(false);
-            fio.setObjectsImported(0);
+            importService.importFile(auth.getName(), file);
+        } catch (ServiceException e) {
             System.out.println(e.getMessage());
         }
-        fioRepo.save(fio);
         return "redirect:/home/movies";
     }
 

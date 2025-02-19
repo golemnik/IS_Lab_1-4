@@ -8,4 +8,6 @@ public interface FIOService {
     List<FileImportOperation> findAllFIOs();
     FileImportOperation findFIOById(int id);
     void deleteFIOById(int id);
+
+    void importFile(FileImportOperation fio, byte[] bytes) throws ServiceException;
 }
