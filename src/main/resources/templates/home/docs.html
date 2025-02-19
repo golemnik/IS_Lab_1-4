@@ -2,6 +2,11 @@
 <html lang="en"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<meta charset="UTF-8">
+	<title>Docs</title>
+	<link th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
 
 <body>
 
@@ -10,25 +15,33 @@
 	</div>
 
 	<div>
-		<form method="POST" th:enctype="@{multipart/form-data}" th:action="@{uploadFile}">
-			<table>
-				<tr>
-					<td>File to upload:</td>
-					<td><input type="file" name="file" /></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="submit" value="Upload" /></td>
-				</tr>
-			</table>
-		</form>
-	</div>
+		<table>
+			<tr>
+				<td>
+					<form method="POST" th:enctype="@{multipart/form-data}" th:action="@{uploadFile}">
+						<table>
+							<tr>
+								<td>File to upload:</td>
+								<td><input type="file" name="file" /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="submit" value="Upload" /></td>
+							</tr>
+						</table>
+					</form>
+				</td>
+				<td>
+					<form method="POST" th:action="@{demo-file-download}">
+						<input type="submit" value="Download file (All movies)." />
+					</form>
+				</td>
+				<td>
+					<a th:href="@{/home/movies}">Go to: Movies list</a>
+				</td>
+			</tr>
+		</table>
 
-	<div>
-		<form method="POST" th:action="@{demo-file-download}">
-			<input type="submit" value="Download file" />
-		</form>
-		<a th:href="@{/home/movies}">Movies list</a> <br>
 	</div>
 
 	<fieldset>

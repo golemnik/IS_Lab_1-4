@@ -10,32 +10,48 @@
 <body>
     <h1>Movies list</h1>
 
-    <fieldset class="field_set" >
-        <form th:action="@{filter}" method="post">
-            <input type="text" id="filter" name="filter" th:value="${filter}"/>
+    <table>
+        <tr>
+            <td>
+                <fieldset class="field_set" >
+                    <form th:action="@{filter}" method="post">
+                        <input type="text" id="filter" name="filter" th:value="${filter}"/>
 
-            <select id="field" name="field">
-                <option th:selected="${field == 'Name'}" value="Name">Name</option>
-                <option th:selected="${field == 'Coord X'}" value="Coord X">Coord X</option>
-                <option th:selected="${field == 'Coord Y'}" value="Coord Y">Coord Y</option>
-                <option th:selected="${field == 'Creation Date'}" value="Creation Date">Creation Date</option>
-                <option th:selected="${field == 'Oscar amount'}" value="Oscar amount">Oscar amount</option>
-                <option th:selected="${field == 'Budget'}" value="Budget">Budget</option>
-                <option th:selected="${field == 'MPAA Rating'}" value="MPAA Rating">MPAA Rating</option>
-                <option th:selected="${field == 'Total boxing office'}" value="Total boxing office">Total boxing office</option>
-                <option th:selected="${field == 'Length'}" value="Length">Length</option>
-                <option th:selected="${field == 'Golden palm amount'}" value="Golden palm amount">Golden palm amount</option>
-            </select>
+                        <select id="field" name="field">
+                            <option th:selected="${field == 'Name'}" value="Name">Name</option>
+                            <option th:selected="${field == 'Coord X'}" value="Coord X">Coord X</option>
+                            <option th:selected="${field == 'Coord Y'}" value="Coord Y">Coord Y</option>
+                            <option th:selected="${field == 'Creation Date'}" value="Creation Date">Creation Date</option>
+                            <option th:selected="${field == 'Oscar amount'}" value="Oscar amount">Oscar amount</option>
+                            <option th:selected="${field == 'Budget'}" value="Budget">Budget</option>
+                            <option th:selected="${field == 'MPAA Rating'}" value="MPAA Rating">MPAA Rating</option>
+                            <option th:selected="${field == 'Total boxing office'}" value="Total boxing office">Total boxing office</option>
+                            <option th:selected="${field == 'Length'}" value="Length">Length</option>
+                            <option th:selected="${field == 'Golden palm amount'}" value="Golden palm amount">Golden palm amount</option>
+                        </select>
 
-            <select id="sort" name="sort">
-                <option th:selected="${sort == 0}" th:value="0">-//-</option>
-                <option th:selected="${sort == 1}" th:value="1" >/\</option>
-                <option th:selected="${sort == -1}" th:value="-1">\/</option>
-            </select>
+                        <select id="sort" name="sort">
+                            <option th:selected="${sort == 0}" th:value="0">-//-</option>
+                            <option th:selected="${sort == 1}" th:value="1" >/\</option>
+                            <option th:selected="${sort == -1}" th:value="-1">\/</option>
+                        </select>
 
-            <button type="submit">Filter</button>
-        </form>
-    </fieldset>
+                        <button type="submit">Filter</button>
+                    </form>
+                </fieldset>
+            </td>
+            <td>
+<!--                <fieldset class="field_set">-->
+                    <a th:href="@{/home}">Back to home</a>
+<!--                </fieldset>-->
+            </td>
+            <td>
+<!--                <fieldset class="field_set">-->
+                    <a th:href="@{/home/docs}">Docs</a> <br>
+<!--                </fieldset>-->
+            </td>
+        </tr>
+    </table>
 
     <fieldset>
         <legend>Special operations</legend>
@@ -141,11 +157,6 @@
         </tbody>
     </table>
 
-
-    <fieldset class="field_set">
-        <a th:href="@{/home}">Back to home</a>
-        <a th:href="@{/home/docs}">Docs</a> <br>
-    </fieldset>
 
 </body>
 </html>

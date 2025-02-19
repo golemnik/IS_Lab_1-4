@@ -45,7 +45,6 @@ public class MovieController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/home/docs")
     public String getDocs(Model model) {
         List<FileImportOperation> fios = fioService.findAllFIOs();
@@ -90,7 +89,6 @@ public class MovieController {
         return ResponseEntity.ok().headers(httpHeaders).body(demoContent.getBytes()); // (5) Return Response
     }
 
-    @Transactional
     @PostMapping("/home/uploadFile")
     public String submit(@RequestParam("file") MultipartFile file) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -120,14 +118,13 @@ public class MovieController {
             fio.setObjectsImported(movies.size());
 
             movieRepo.saveAll(movies);
-
         }
         catch (Exception e) {
             fio.setFinished(false);
             fio.setObjectsImported(0);
             System.out.println(e.getMessage());
-            fioRepo.save(fio);
         }
+        fioRepo.save(fio);
         return "redirect:/home/movies";
     }
 

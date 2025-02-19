@@ -49,7 +49,7 @@ public class UserController {
         return "home";
     }
 
-        @GetMapping(value = "/registration")
+    @GetMapping(value = "/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new Client());
         return "registration";
