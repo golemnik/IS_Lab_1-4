@@ -54,7 +54,6 @@
 			<thead>
 			<tr>
 				<th scope="row">--</th>
-				<th scope="row">--</th>
 				<th scope="row">Id</th>
 				<th scope="row">Owner</th>
 				<th scope="row">Finished</th>
@@ -64,19 +63,14 @@
 			</thead>
 			<tbody>
 			<tr th:each="fio: ${fios}">
-				<td>
-<!--					<form th:action="@{deleteMovie}" method="post">-->
-<!--						<input type="hidden" th:value="${movie.id}" name="movieId"/>-->
-<!--						<button type="submit">Delete</button>-->
-<!--					</form>-->
-					<button type="submit">DO NOTHING</button>
+				<td th:hidden="${!fio.isFinished()}">
+					<form th:action="@{downloadFIO}" method="post">
+						<input type="hidden" th:value="${fio.id}" name="fioId"/>
+						<button type="submit">Download</button>
+					</form>
 				</td>
-				<td>
-<!--					<form th:action="@{updateMovie}" method="post">-->
-<!--						<input type="hidden" th:value="${movie.id}" name="movieId"/>-->
-<!--						<button type="submit">Update</button>-->
-<!--					</form>-->
-					<button type="submit">DO NOTHING</button>
+				<td th:hidden="${fio.isFinished()}">
+					<button type="submit" th:disabled="true">--Disabled--</button>
 				</td>
 
 				<td th:text="${fio.id}"></td>

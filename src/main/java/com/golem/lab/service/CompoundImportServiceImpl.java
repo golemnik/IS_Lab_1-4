@@ -51,4 +51,9 @@ public class CompoundImportServiceImpl implements CompoundImportService {
             }
         });
     }
+
+    @Override
+    public String exportFile(int fioId) throws ServiceException {
+        return cloudService.downloadFile(fioId);
+    }
 }

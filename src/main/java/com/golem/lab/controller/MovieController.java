@@ -34,7 +34,7 @@ public class MovieController {
     @Autowired
     private FIOService fioService;
     @Autowired
-    private CompoundImportService importService;
+    private CompoundImportService compoundService;
 
 
     @GetMapping("/home/docs")
@@ -81,16 +81,32 @@ public class MovieController {
         return ResponseEntity.ok().headers(httpHeaders).body(demoContent.getBytes()); // (5) Return Response
     }
 
+
+    @PostMapping("/home/downloadFIO")
+    public ResponseEntity<byte[]> downloadFIO(@RequestParam int fioId) {
+        String content;
+        try {
+            content = compoundService.exportFile(fioId);
+        } catch (ServiceException e) {
+            System.out.println(e.getMessage());
+            content = e.toString();
+        }
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE); // (3) Content-Type: application/octet-stream
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename(fioId + ".json").build().toString()); // (4) Content-Disposition: attachment; filename="demo-file.txt"
+        return ResponseEntity.ok().headers(httpHeaders).body(content.getBytes()); // (5) Return Response
+    }
+
     @PostMapping("/home/uploadFile")
     public String submit(@RequestParam("file") MultipartFile file) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         try {
-            importService.importFile(auth.getName(), file);
+            compoundService.importFile(auth.getName(), file);
         } catch (ServiceException e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/home/movies";
+        return "redirect:/home/docs";
     }
 
     @RequestMapping("/home/sop_action")

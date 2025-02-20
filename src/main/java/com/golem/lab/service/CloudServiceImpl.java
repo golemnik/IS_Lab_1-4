@@ -10,7 +10,11 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 @Service
 public class CloudServiceImpl implements CloudService {
@@ -50,6 +54,24 @@ public class CloudServiceImpl implements CloudService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public String downloadFile(int fioId) throws ServiceException {
+        try{
+            System.out.println("download from S3: " + fioId);
+            S3Client s3 = getClient();
+
+            GetObjectRequest request = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(getKey(fioId))
+                    .build();
+
+            return new String(s3.getObject(request).readAllBytes(), StandardCharsets.UTF_8);
+        } catch (AwsServiceException | SdkClientException | IOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 
     @Override
     public void removeFile(int fio) throws ServiceException {
